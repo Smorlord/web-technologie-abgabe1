@@ -6,3 +6,7 @@ npm install
 
 # dev run - uses nodemon
 npm run dev
+
+# For MondoDB API
+cd apis
+npm run dev
