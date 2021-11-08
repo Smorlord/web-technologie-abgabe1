@@ -8,5 +8,5 @@ npm install
 npm run dev
 
 # For MondoDB API
-cd apis
-npm run dev
+1. cd apis
+2. npm run dev
