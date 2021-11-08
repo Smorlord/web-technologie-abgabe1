@@ -1,5 +1,8 @@
 const express = require('express')
+const axios = require('axios');
+const { response } = require('express');
 const app = express()
+const crypto = require("crypto");
 
 //todo array
 var todos = [];
@@ -14,28 +17,47 @@ app.use(express.urlencoded({ extended: true }));
 
 //routing
 app.get('/', (req, res) => {
-    res.render('todo.ejs', {todos});
+    axios.get("http://localhost:4000/todos")
+    .then(response => {
+      todos = response.data;
+      res.render('todo.ejs', {todos});
+    })
+    .catch(error => {
+      console.log(error);
+      res.render('todo.ejs', {todos});
+    })
 });
 
-app.post('/add',(req, res) => {
+app.post('/add', async (req, res) => {
     if(req.body.content != ''){
-      todos.push({
-        id: nextId,
-        content: req.body.content,
-      });
-      console.log(todos);
+      todoId = crypto.randomBytes(16).toString("hex");
+      newTodo = {
+        id: todoId,
+        content: req.body.content
+      }
       nextId++;
+
+      const jsonData = JSON.stringify(newTodo);
+      const responseTest = await axios.post('http://localhost:4000/add/todo', jsonData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
     }
     res.redirect("/");
 });
 
-app.get('/remove', (req, res) => {
-  todos.forEach(todo => {
-    console.log(todo.id);
-    if(todo.id == Number(req.query.id)){
-      todos.pop(todo);
-    }
+app.get('/remove', async (req, res) => {
+  const jsonData = JSON.stringify({
+    id: req.query.id
   })
+
+  const requestDelete = await axios.post('http://localhost:4000/delete/todo', jsonData, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  
   res.redirect("/");
 });
 
