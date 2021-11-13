@@ -1,10 +1,12 @@
 var express = require("express");
 var mongo = require('./mongo'); 
-
-const todoSchema = require("./schemas/todo-schema")
+const todoSchema = require("./schemas/todo-schema");
 
 var app = express();
 app.use(express.json());
+
+const swaggerUi = require('swagger-ui-express');
+swaggerDocument = require('./swagger.json');
 
 app.get("/todos", async (req, res) => {
     const getMongoDBTodos = async () => {
@@ -59,6 +61,12 @@ app.post("/delete/todo", async (req, res) => {
         res.sendStatus(200);
     })
 });
+
+app.use(
+    '/api-docs',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+);
 
 app.listen(4000, () => {
  console.log("MongoDB API running on http://localhost:4000");

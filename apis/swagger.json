@@ -1,0 +1,135 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My Todo Project CRUD",
+    "description": "My Todo Project Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Todos",
+      "description": "API for todos in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/add/todo": {
+      "post": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "Create new todo in system",
+        "parameters": [
+          {
+            "id": "id",
+            "content": "content",
+            "description": "Todo that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New todo is created",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      } 
+    },
+    "/todos": {
+      "get": {
+          "tags": [
+            "Todos"
+          ],
+          "summary": "Get all todos in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Todos"
+              }
+            }
+          }
+        }
+    },
+    "/delete/todo": {
+      "delete": {
+        "summary": "Delete todo with given ID in body",
+        "tags": [
+          "Todo"
+        ],
+        "parameters": [
+          {
+            "id": "id",
+            "in": "body",
+            "description": "Todo with id in body",
+            "schema": {
+              "$ref": "#/definitions/deleteTodo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo is deleted",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Todo": {
+      "required": [
+        "id",
+        "content"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "deleteTodo" : {
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "Todos": {
+      "type": "array",
+      "$ref": "#/definitions/Todo"
+    }
+   
+  }
+}
