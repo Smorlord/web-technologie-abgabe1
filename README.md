@@ -2,7 +2,9 @@
 Web Technologie - Abgabe 1
 
 # install
-npm install
+1. npm install
+2. cd apis/
+3. npm install (for the api dependencies)
 
 # dev run - uses nodemon
 npm run dev
