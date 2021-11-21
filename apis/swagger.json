@@ -35,9 +35,10 @@
         "description": "Create new todo in system",
         "parameters": [
           {
-            "id": "id",
-            "content": "content",
-            "description": "Todo that we want to create",
+            "name": "id",
+            "in": "body",
+            "required": true,
+            "description": "The ID of a todo",
             "schema": {
               "$ref": "#/definitions/Todo"
             }
@@ -80,7 +81,7 @@
         ],
         "parameters": [
           {
-            "id": "id",
+            "name": "id",
             "in": "body",
             "description": "Todo with id in body",
             "schema": {
